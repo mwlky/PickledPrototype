@@ -42,7 +42,7 @@ public class PickUpController : MonoBehaviour
     void FreezeYPosition()
     {
         Vector3 currentPosition = transform.position;
-        transform.position = new Vector3(currentPosition.x, 0, currentPosition.z);
+        transform.position = new Vector3(currentPosition.x, -0.5f, currentPosition.z);
     }
 
     void PickUp()
