@@ -7,11 +7,11 @@ public class MousePosition : MonoBehaviour
 {
     [SerializeField] private Camera mainCamera;
 
-    public RaycastHit GetObjectThatPlayerClicked()
+    public Vector3 GetMousePosition()
     {
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
 
         Physics.Raycast(ray, out RaycastHit hit);
-        return hit;
+        return hit.point;
     }
 }
