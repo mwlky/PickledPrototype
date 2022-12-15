@@ -11,12 +11,12 @@ public class SpawnDestiny : MonoBehaviour
     
     private void OnEnable()
     {
-        InputController.onSpawnDestiny += CheckTag;
+        InputController.OnSpawnDestiny += CheckTag;
     }
 
     private void OnDisable()
     {
-        InputController.onSpawnDestiny -= CheckTag;
+        InputController.OnSpawnDestiny -= CheckTag;
     }
 
     void SpawnDestinyPoint(Vector3 position)

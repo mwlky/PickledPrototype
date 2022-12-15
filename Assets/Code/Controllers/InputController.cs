@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class InputController : MonoBehaviour
 {
-    public static event Action onSpawnDestiny; 
+    public static event Action OnSpawnDestiny; 
 
     private void Update()
     {
         if(Input.GetMouseButtonDown(0))
-            onSpawnDestiny?.Invoke();
+            OnSpawnDestiny?.Invoke();
     }
 }
