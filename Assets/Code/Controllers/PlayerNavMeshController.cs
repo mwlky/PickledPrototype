@@ -16,6 +16,11 @@ public class PlayerNavMeshController : MonoBehaviour
 
     private void Update()
     {
-        _navMeshAgent.destination = _movePositionWaypoint.position;
+        SetDestination(_movePositionWaypoint.position);
+    }
+
+    public void SetDestination(Vector3 destination)
+    {
+        _navMeshAgent.destination = destination;
     }
 }
