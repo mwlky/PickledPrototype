@@ -80,19 +80,16 @@ public class PlayerNavMeshController : MonoBehaviour
         if (_isPlayerHoldingPill)
         {
             if (collision.gameObject.tag == "Pill")
-            {
-                if (Input.GetMouseButtonUp(0))
-                {
-                    Destroy(collision.gameObject);
-                    _isPlayerHoldingPill = false;
-                    StartCoroutine("PowerPill");
-                }
-
+            {  
+                Destroy(collision.gameObject);
+                _isPlayerHoldingPill = false;
+                StartCoroutine("PowerPill");
             }
-        }
-        else
+            
+        }else if (collision.gameObject.tag == "Pill")
         {
-            if (collision.gameObject.tag == "Pill") OnGameLose?.Invoke();
+            OnGameLose?.Invoke();
         }
     }
+
 }
