@@ -40,8 +40,6 @@ public class GameManager : MonoBehaviour
     void GameOver() =>
         SceneManager.LoadScene("GameOverScene");
 
-    void GameWin()
-    {
-        Debug.Log("All carrots collected");
-    }
+    void GameWin() =>
+        SceneManager.LoadScene("GameWinScene");
 }
