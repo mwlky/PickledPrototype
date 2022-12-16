@@ -80,18 +80,28 @@ public class PlayerNavMeshController : MonoBehaviour
         if (_isPlayerHoldingPill)
         {
             if (collision.gameObject.tag == "Pill")
+<<<<<<< Updated upstream
             {
                 //collision.gameObject.SetActive(false);
                 //OnPillTaken?.Invoke();
+=======
+            {  
+>>>>>>> Stashed changes
                 Destroy(collision.gameObject);
                 _isPlayerHoldingPill = false;
                 StartCoroutine("PowerPill");
             }
-        }
-        else
+        }else if (collision.gameObject.tag == "Pill")
         {
-            if (collision.gameObject.tag == "Pill") OnGameLose?.Invoke();
+            OnGameLose?.Invoke();
         }
     }
 
+<<<<<<< Updated upstream
+=======
+    private void OnTriggerStay(Collider collision)
+    {
+        
+    }
+>>>>>>> Stashed changes
 }
