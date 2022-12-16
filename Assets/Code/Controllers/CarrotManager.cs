@@ -6,11 +6,12 @@ using UnityEngine;
 public class CarrotManager : MonoBehaviour
 {
     public static event Action OnAllCarrotsCollected;
-    public static event Action<int> OnCarrotsCounted; 
+    public static event Action<int> OnCarrotsCounted;
 
+    public static List<GameObject> carrotsCount = new();
     private int amountOfCarrots;
 
-    private void Awake() =>
+    private void Start() =>
         CountAllCarrots();
 
     private void OnEnable() =>
