@@ -20,16 +20,12 @@ public class PickUpController : MonoBehaviour
 
     private void OnEnable()
     {
-        PlayerNavMeshController.OnPillTaken += MoveToStart;
+
     }
 
     private void Awake()
     {
         _startingPos = transform.position;
-    }
-    private void MoveToStart()
-    {
-        transform.position = _startingPos;
     }
 
     private bool isHolding;

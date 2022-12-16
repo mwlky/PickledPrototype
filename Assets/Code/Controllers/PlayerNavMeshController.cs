@@ -17,9 +17,6 @@ public class PlayerNavMeshController : MonoBehaviour
     private NavMeshAgent _navMeshAgent;
     public bool _isPlayerHoldingPill;
 
-
-    public static event Action OnPillTaken;
-
     [SerializeField] private GameObject pillPrefab;
 
     private void Awake() 
@@ -75,33 +72,24 @@ public class PlayerNavMeshController : MonoBehaviour
                 GameManager.Instance.enemies.Remove(collision.gameObject);
                 Destroy(collision.gameObject);
             }
-        }
+        }   
+    }
 
+    private void OnTriggerStay(Collider collision)
+    {
         if (_isPlayerHoldingPill)
         {
             if (collision.gameObject.tag == "Pill")
-<<<<<<< Updated upstream
-            {
-                //collision.gameObject.SetActive(false);
-                //OnPillTaken?.Invoke();
-=======
             {  
->>>>>>> Stashed changes
                 Destroy(collision.gameObject);
                 _isPlayerHoldingPill = false;
                 StartCoroutine("PowerPill");
             }
+            
         }else if (collision.gameObject.tag == "Pill")
         {
             OnGameLose?.Invoke();
         }
     }
 
-<<<<<<< Updated upstream
-=======
-    private void OnTriggerStay(Collider collision)
-    {
-        
-    }
->>>>>>> Stashed changes
 }

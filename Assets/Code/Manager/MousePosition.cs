@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class MousePosition : MonoBehaviour
 {
-    //[SerializeField] private Camera mainCamera;
-
     public Vector3 GetMousePosition()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
