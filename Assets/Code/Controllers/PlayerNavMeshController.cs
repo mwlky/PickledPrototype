@@ -6,38 +6,92 @@ using UnityEngine.AI;
 
 public class PlayerNavMeshController : MonoBehaviour
 {
-    [SerializeField] private Transform _movePositionWaypoint;
+    [SerializeField] public Transform _movePositionWaypoint;
+    [SerializeField] private Transform _pillStartingPosition;
 
     [SerializeField] private float _agentSpeed;
 
-    private NavMeshAgent _navMeshAgent;
-    private bool isPlayerHoldingPill;
+    public static event Action OnGameLose;
 
-    private void Awake() =>
+    private StateMachine _stateMachine;
+    private NavMeshAgent _navMeshAgent;
+    public bool _isPlayerHoldingPill;
+
+
+    public static event Action OnPillTaken;
+
+    [SerializeField] private GameObject pillPrefab;
+
+    private void Awake() 
+    {
         _navMeshAgent = GetComponent<NavMeshAgent>();
+
+        _stateMachine = new StateMachine();
+        _stateMachine.AddState("followPill", 
+            new FollowPillState(_navMeshAgent, _agentSpeed, this));
+        _stateMachine.AddState("powerPill", new PowerPillState(_navMeshAgent, transform));
+
+        _stateMachine.ChangeState("followPill");
+
+    }
 
     private void OnEnable() =>
         PickUpController.onPlayerHoldingTheObject += PlayerPickedUpPill;
     
     private void OnDisable() =>
         PickUpController.onPlayerHoldingTheObject -= PlayerPickedUpPill;
-    
-    private void Update() =>
-        SetDestination();
+
+    private void Update()
+    {
+        _stateMachine.Update();
+    }
 
     void PlayerPickedUpPill(bool holding) =>
-        isPlayerHoldingPill = holding;
+        _isPlayerHoldingPill = holding;
     
-    void SetDestination()
+
+    public IEnumerator PowerPill()
     {
-        if (isPlayerHoldingPill)
+        _stateMachine.ChangeState("powerPill");
+
+        yield return new WaitForSeconds(5f);
+        _movePositionWaypoint = Instantiate(pillPrefab, _pillStartingPosition).transform;
+
+        _stateMachine.ChangeState("followPill");
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+
+        if (_stateMachine.GetCurrentState() == _stateMachine._states["followPill"])
         {
-            _navMeshAgent.destination = _movePositionWaypoint.position;
-            _navMeshAgent.speed = 0f;
-            return;
+            if (collision.gameObject.tag == "Enemy") OnGameLose?.Invoke();
         }
 
-        _navMeshAgent.destination = _movePositionWaypoint.position;
-        _navMeshAgent.speed = _agentSpeed;
+        if (_stateMachine.GetCurrentState() == _stateMachine._states["powerPill"])
+        {
+            if (collision.gameObject.tag == "Enemy")
+            {
+                GameManager.Instance.enemies.Remove(collision.gameObject);
+                Destroy(collision.gameObject);
+            }
+        }
+
+        if (_isPlayerHoldingPill)
+        {
+            if (collision.gameObject.tag == "Pill")
+            {
+                //collision.gameObject.SetActive(false);
+                //OnPillTaken?.Invoke();
+                Destroy(collision.gameObject);
+                _isPlayerHoldingPill = false;
+                StartCoroutine("PowerPill");
+            }
+        }
+        else
+        {
+            if (collision.gameObject.tag == "Pill") OnGameLose?.Invoke();
+        }
     }
+
 }

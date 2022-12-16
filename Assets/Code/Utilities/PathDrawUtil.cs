@@ -14,11 +14,6 @@ public class PathDrawUtil : MonoBehaviour
         
     }
 
-    //public void Update()
-    //{
-    //    StartCoroutine(DrawPath());
-    //}
-
     IEnumerator DrawPath()
     {
         _pathLine.SetPosition(0, transform.position);

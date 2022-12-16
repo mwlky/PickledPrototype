@@ -16,6 +16,8 @@ public class EnemyRandomPatrolController : MonoBehaviour
 
     private void Awake()
     {
+        GameManager.Instance.enemies.Add(gameObject);
+
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
 
@@ -49,7 +51,7 @@ public class EnemyRandomPatrolController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _stateMachine.PhysicsUpdate();
+       
     }
 
     private bool CheckDistanceForChase()

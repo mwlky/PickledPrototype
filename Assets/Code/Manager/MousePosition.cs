@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class MousePosition : MonoBehaviour
 {
-    [SerializeField] private Camera mainCamera;
+    //[SerializeField] private Camera mainCamera;
 
     public Vector3 GetMousePosition()
     {
-        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         Physics.Raycast(ray, out RaycastHit hit);
         return hit.point;

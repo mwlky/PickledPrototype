@@ -16,7 +16,21 @@ public class PickUpController : MonoBehaviour
     [SerializeField] private Transform collisionCheck;
     [SerializeField] private float collisionCheckRadius;
     [SerializeField] private LayerMask collisionCheckLayer;
+    private Vector3 _startingPos;
 
+    private void OnEnable()
+    {
+        PlayerNavMeshController.OnPillTaken += MoveToStart;
+    }
+
+    private void Awake()
+    {
+        _startingPos = transform.position;
+    }
+    private void MoveToStart()
+    {
+        transform.position = _startingPos;
+    }
 
     private bool isHolding;
     private Vector3 pickUpPosition;
@@ -67,6 +81,7 @@ public class PickUpController : MonoBehaviour
 
     public bool IsColliding()
     {
+        if (collisionCheck == null) return false;
         bool isColliding = Physics.CheckSphere(collisionCheck.position, collisionCheckRadius, collisionCheckLayer);
         return isColliding;
     }
