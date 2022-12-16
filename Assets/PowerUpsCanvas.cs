@@ -12,19 +12,14 @@ public class PowerUpsCanvas : MonoBehaviour
 
     private int hearthAmount;
     
-    // private void OnEnable()
-    // {
-    //     PowerupController.OnPowerUpsAmountUpdate += UpdateHearthUI;
-    // }
-    //
-    // private void OnDisable()
-    // {
-    //     PowerupController.OnPowerUpsAmountUpdate -= UpdateHearthUI;
-    // }
-
-    private void Start()
+    private void OnEnable()
     {
-        hearthAmount = 3;
+        PowerupController.OnPowerUpsAmountUpdate += UpdateHearthUI;
+    }
+    
+    private void OnDisable()
+    {
+        PowerupController.OnPowerUpsAmountUpdate -= UpdateHearthUI;
     }
 
     void UpdateHearthUI(int amount)
@@ -36,10 +31,22 @@ public class PowerUpsCanvas : MonoBehaviour
 
     void GenerateHearthUI()
     {
+        Clear();
+        
         for (int i = 0; i < hearthAmount; i++)
         {
             GameObject hearthIcon = Instantiate(hearthImagePrefab, parent);
             hearts.Add(hearthIcon);
         }
+    }
+
+    void Clear()
+    {
+        foreach (var t in hearts)
+        {
+            Destroy(t.gameObject);
+        }
+
+        hearts.Clear();
     }
 }

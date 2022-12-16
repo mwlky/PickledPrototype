@@ -12,6 +12,7 @@ public class PlayerNavMeshController : MonoBehaviour
     [SerializeField] private float _agentSpeed;
 
     public static event Action OnGameLose;
+    public static event Action OnPillTaken;
 
     private StateMachine _stateMachine;
     private NavMeshAgent _navMeshAgent;
@@ -19,22 +20,21 @@ public class PlayerNavMeshController : MonoBehaviour
 
     [SerializeField] private GameObject pillPrefab;
 
-    private void Awake() 
+    private void Awake()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
 
         _stateMachine = new StateMachine();
-        _stateMachine.AddState("followPill", 
+        _stateMachine.AddState("followPill",
             new FollowPillState(_navMeshAgent, _agentSpeed, this));
         _stateMachine.AddState("powerPill", new PowerPillState(_navMeshAgent, transform));
 
         _stateMachine.ChangeState("followPill");
-
     }
 
     private void OnEnable() =>
         PickUpController.onPlayerHoldingTheObject += PlayerPickedUpPill;
-    
+
     private void OnDisable() =>
         PickUpController.onPlayerHoldingTheObject -= PlayerPickedUpPill;
 
@@ -45,7 +45,7 @@ public class PlayerNavMeshController : MonoBehaviour
 
     void PlayerPickedUpPill(bool holding) =>
         _isPlayerHoldingPill = holding;
-    
+
 
     public IEnumerator PowerPill()
     {
@@ -59,37 +59,32 @@ public class PlayerNavMeshController : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-
         if (_stateMachine.GetCurrentState() == _stateMachine._states["followPill"])
         {
-            if (collision.gameObject.tag == "Enemy") OnGameLose?.Invoke();
+            if (collision.gameObject.CompareTag("Enemy")) OnGameLose?.Invoke();
         }
 
-        if (_stateMachine.GetCurrentState() == _stateMachine._states["powerPill"])
-        {
-            if (collision.gameObject.tag == "Enemy")
-            {
-                GameManager.Instance.enemies.Remove(collision.gameObject);
-                Destroy(collision.gameObject);
-            }
-        }   
+        if (_stateMachine.GetCurrentState() != _stateMachine._states["powerPill"]) return;
+        if (!collision.gameObject.CompareTag("Enemy")) return;
+
+        GameManager.Instance.enemies.Remove(collision.gameObject);
+        Destroy(collision.gameObject);
     }
 
     private void OnTriggerStay(Collider collision)
     {
         if (_isPlayerHoldingPill)
         {
-            if (collision.gameObject.tag == "Pill")
-            {  
-                Destroy(collision.gameObject);
-                _isPlayerHoldingPill = false;
-                StartCoroutine("PowerPill");
-            }
-            
-        }else if (collision.gameObject.tag == "Pill")
+            if (!collision.gameObject.CompareTag("Pill")) return;
+            Destroy(collision.gameObject);
+            _isPlayerHoldingPill = false;
+            StartCoroutine("PowerPill");
+
+            OnPillTaken?.Invoke();
+        }
+        else if (collision.gameObject.CompareTag("Pill"))
         {
             OnGameLose?.Invoke();
         }
     }
-
 }

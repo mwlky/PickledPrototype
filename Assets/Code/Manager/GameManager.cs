@@ -18,8 +18,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
-
     private void Awake()
     {
         _instance = this;
@@ -31,12 +29,14 @@ public class GameManager : MonoBehaviour
     {
         CarrotManager.OnAllCarrotsCollected += GameWin;
         PlayerNavMeshController.OnGameLose += GameOver;
+        PowerupController.OnOverdose += GameOver;
     }
 
     private void OnDisable()
     {
         CarrotManager.OnAllCarrotsCollected -= GameWin;
         PlayerNavMeshController.OnGameLose -= GameOver;
+        PowerupController.OnOverdose -= GameOver;
     }
 
     void GameOver() =>
