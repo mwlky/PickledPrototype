@@ -1,29 +1,37 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using System.Collections;
 
-public class PathDrawUtil : MonoBehaviour
+public class PlayerPillPathDraw : MonoBehaviour
 {
+    [SerializeField] private NavMeshAgent _playerAgent;
+    [SerializeField] private PickUpController _pillPickUpcontroller;
     private LineRenderer _pathLine;
-    private NavMeshAgent _agent;
-    public void Start()
-    {
-        _agent = GetComponent<NavMeshAgent>();
-        _pathLine = GetComponent<LineRenderer>();
 
-        
+    private void Awake()
+    {
+        _pathLine = GetComponent<LineRenderer>();
     }
 
-    //public void Update()
-    //{
-    //    StartCoroutine(DrawPath());
-    //}
+    private void Update()
+    {
+        if (_pillPickUpcontroller.IsColliding())
+        {
+            _pathLine.enabled = false;
+        }
+        else
+        {
+            _pathLine.enabled = true;
+        }
+        StartCoroutine(DrawPath());
+    }
 
     IEnumerator DrawPath()
     {
         _pathLine.SetPosition(0, transform.position);
         yield return new WaitForEndOfFrame();
-        NavMeshPath path = _agent.path;
+        NavMeshPath path = _playerAgent.path;
 
 
 
@@ -40,4 +48,5 @@ public class PathDrawUtil : MonoBehaviour
         }
 
     }
+
 }

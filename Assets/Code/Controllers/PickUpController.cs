@@ -7,6 +7,8 @@ public class PickUpController : MonoBehaviour
 {
     public static event Action<bool> onPlayerHoldingTheObject;
 
+    private float _heightOffset = -0.25f;
+
     [Header("Controllers")] [SerializeField]
     private MousePosition mouseController;
 
@@ -14,6 +16,7 @@ public class PickUpController : MonoBehaviour
     [SerializeField] private Transform collisionCheck;
     [SerializeField] private float collisionCheckRadius;
     [SerializeField] private LayerMask collisionCheckLayer;
+
 
     private bool isHolding;
     private Vector3 pickUpPosition;
@@ -42,7 +45,7 @@ public class PickUpController : MonoBehaviour
     void FreezeYPosition()
     {
         Vector3 currentPosition = transform.position;
-        transform.position = new Vector3(currentPosition.x, -0.5f, currentPosition.z);
+        transform.position = new Vector3(currentPosition.x, _heightOffset, currentPosition.z);
     }
 
     void PickUp()
@@ -62,7 +65,7 @@ public class PickUpController : MonoBehaviour
             transform.position = pickUpPosition;
     }
 
-    bool IsColliding()
+    public bool IsColliding()
     {
         bool isColliding = Physics.CheckSphere(collisionCheck.position, collisionCheckRadius, collisionCheckLayer);
         return isColliding;

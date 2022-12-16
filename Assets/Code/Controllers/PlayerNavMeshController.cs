@@ -8,6 +8,8 @@ public class PlayerNavMeshController : MonoBehaviour
 {
     [SerializeField] private Transform _movePositionWaypoint;
 
+    [SerializeField] private float _agentSpeed;
+
     private NavMeshAgent _navMeshAgent;
     private bool isPlayerHoldingPill;
 
@@ -30,10 +32,12 @@ public class PlayerNavMeshController : MonoBehaviour
     {
         if (isPlayerHoldingPill)
         {
-            _navMeshAgent.destination = transform.position;
+            _navMeshAgent.destination = _movePositionWaypoint.position;
+            _navMeshAgent.speed = 0f;
             return;
         }
 
         _navMeshAgent.destination = _movePositionWaypoint.position;
+        _navMeshAgent.speed = _agentSpeed;
     }
 }
