@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+
     private void Awake()
     {
         _instance = this;
