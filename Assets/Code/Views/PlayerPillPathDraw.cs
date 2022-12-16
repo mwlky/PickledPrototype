@@ -31,20 +31,15 @@ public class PlayerPillPathDraw : MonoBehaviour
     {
         _pathLine.SetPosition(0, transform.position);
         yield return new WaitForEndOfFrame();
+
         NavMeshPath path = _playerAgent.path;
 
-
-
-        Vector3 previousCorner = path.corners[0];
         _pathLine.positionCount = path.corners.Length;
 
-        int i = 1;
-        while (i < path.corners.Length)
+        for (int i = 1; i < path.corners.Length; i++)
         {
             Vector3 currentCorner = path.corners[i];
             _pathLine.SetPosition(i, currentCorner);
-            previousCorner = currentCorner;
-            i++;
         }
 
     }

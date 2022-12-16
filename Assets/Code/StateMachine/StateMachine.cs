@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StateMachine
 {
-    private Dictionary<string, IState> _states;
+    public Dictionary<string, IState> _states;
     private IState _currentState;
 
     public StateMachine()
