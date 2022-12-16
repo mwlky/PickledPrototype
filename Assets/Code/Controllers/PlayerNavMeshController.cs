@@ -17,7 +17,11 @@ public class PlayerNavMeshController : MonoBehaviour
     private NavMeshAgent _navMeshAgent;
     public bool _isPlayerHoldingPill;
 
+
+    public static event Action OnPillTaken;
+
     [SerializeField] private GameObject pillPrefab;
+    [SerializeField] private GameObject enemyPrefab;
 
     private void Awake() 
     {
@@ -70,13 +74,14 @@ public class PlayerNavMeshController : MonoBehaviour
             if (collision.gameObject.tag == "Enemy")
             {
                 GameManager.Instance.enemies.Remove(collision.gameObject);
-                Destroy(collision.gameObject);
-            }
-        }   
-    }
+                Transform spawnPoint = collision.gameObject.GetComponent<EnemyRandomPatrolController>().StartingPoint;
 
-    private void OnTriggerStay(Collider collision)
-    {
+                StartCoroutine(SpawnEnemy(spawnPoint));
+                Destroy(collision.gameObject);
+
+            }
+        }
+
         if (_isPlayerHoldingPill)
         {
             if (collision.gameObject.tag == "Pill")
@@ -85,11 +90,16 @@ public class PlayerNavMeshController : MonoBehaviour
                 _isPlayerHoldingPill = false;
                 StartCoroutine("PowerPill");
             }
-            
         }else if (collision.gameObject.tag == "Pill")
         {
             OnGameLose?.Invoke();
         }
+    }
+
+    public IEnumerator SpawnEnemy(Transform startPoint)
+    {
+        yield return new WaitForSeconds(10);
+        GameManager.Instance.enemies.Add(Instantiate(enemyPrefab, startPoint));
     }
 
 }

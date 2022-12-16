@@ -12,10 +12,14 @@ public class EnemyRandomPatrolController : MonoBehaviour
     private NavMeshAgent _navMeshAgent;
     private Transform _playerTransform;
 
+    public Transform StartingPoint { get; private set; }
+
     public RandomNavMeshPath _randomNavMeshPath;
 
     private void Awake()
     {
+        StartingPoint = this.transform;
+
         GameManager.Instance.enemies.Add(gameObject);
 
         _navMeshAgent = GetComponent<NavMeshAgent>();

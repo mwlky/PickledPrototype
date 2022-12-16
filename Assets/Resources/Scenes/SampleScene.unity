@@ -5634,6 +5634,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Setup
       objectReference: {fileID: 0}
+    - target: {fileID: 5969915570013949424, guid: 80b88929037505f43af5427857fea313, type: 3}
+      propertyPath: enemyPrefab
+      value: 
+      objectReference: {fileID: 6645282040819681827, guid: d141a7ddaeb2f4a4c9a57b6de7a284f9, type: 3}
     - target: {fileID: 5969915571101217290, guid: 80b88929037505f43af5427857fea313, type: 3}
       propertyPath: mouseController
       value: 
