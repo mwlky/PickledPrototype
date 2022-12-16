@@ -5638,6 +5638,30 @@ PrefabInstance:
       propertyPath: mouseController
       value: 
       objectReference: {fileID: 1973377426}
+    - target: {fileID: 5969915571164738756, guid: 80b88929037505f43af5427857fea313, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.5999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 5969915571164738756, guid: 80b88929037505f43af5427857fea313, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.1800003
+      objectReference: {fileID: 0}
+    - target: {fileID: 8003628571374483235, guid: 80b88929037505f43af5427857fea313, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.4499998
+      objectReference: {fileID: 0}
+    - target: {fileID: 8003628571374483235, guid: 80b88929037505f43af5427857fea313, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.1399994
+      objectReference: {fileID: 0}
+    - target: {fileID: 8003628571575884207, guid: 80b88929037505f43af5427857fea313, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4.54
+      objectReference: {fileID: 0}
+    - target: {fileID: 8003628571575884207, guid: 80b88929037505f43af5427857fea313, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -6.54
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80b88929037505f43af5427857fea313, type: 3}
 --- !u!1001 &7434462543756811596
