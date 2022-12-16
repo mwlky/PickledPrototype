@@ -12,6 +12,7 @@ public class PlayerNavMeshController : MonoBehaviour
     [SerializeField] private float _agentSpeed;
 
     public static event Action OnGameLose;
+    public static event Action OnPillTaken;
 
     private StateMachine _stateMachine;
     private NavMeshAgent _navMeshAgent;
@@ -23,22 +24,21 @@ public class PlayerNavMeshController : MonoBehaviour
     [SerializeField] private GameObject pillPrefab;
     [SerializeField] private GameObject enemyPrefab;
 
-    private void Awake() 
+    private void Awake()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
 
         _stateMachine = new StateMachine();
-        _stateMachine.AddState("followPill", 
+        _stateMachine.AddState("followPill",
             new FollowPillState(_navMeshAgent, _agentSpeed, this));
         _stateMachine.AddState("powerPill", new PowerPillState(_navMeshAgent, transform));
 
         _stateMachine.ChangeState("followPill");
-
     }
 
     private void OnEnable() =>
         PickUpController.onPlayerHoldingTheObject += PlayerPickedUpPill;
-    
+
     private void OnDisable() =>
         PickUpController.onPlayerHoldingTheObject -= PlayerPickedUpPill;
 
@@ -49,7 +49,7 @@ public class PlayerNavMeshController : MonoBehaviour
 
     void PlayerPickedUpPill(bool holding) =>
         _isPlayerHoldingPill = holding;
-    
+
 
     public IEnumerator PowerPill()
     {
@@ -63,11 +63,11 @@ public class PlayerNavMeshController : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-
         if (_stateMachine.GetCurrentState() == _stateMachine._states["followPill"])
         {
-            if (collision.gameObject.tag == "Enemy") OnGameLose?.Invoke();
+            if (collision.gameObject.CompareTag("Enemy")) OnGameLose?.Invoke();
         }
+
 
         if (_stateMachine.GetCurrentState() == _stateMachine._states["powerPill"])
         {
@@ -91,6 +91,7 @@ public class PlayerNavMeshController : MonoBehaviour
                 StartCoroutine("PowerPill");
             }
         }else if (collision.gameObject.tag == "Pill")
+
         {
             OnGameLose?.Invoke();
         }
@@ -101,5 +102,4 @@ public class PlayerNavMeshController : MonoBehaviour
         yield return new WaitForSeconds(10);
         GameManager.Instance.enemies.Add(Instantiate(enemyPrefab, startPoint));
     }
-
 }

@@ -18,18 +18,14 @@ public class PickUpController : MonoBehaviour
     [SerializeField] private LayerMask collisionCheckLayer;
     private Vector3 _startingPos;
 
-    private void OnEnable()
-    {
-
-    }
-
+    private bool isHolding;
+    private Vector3 pickUpPosition;
+    
     private void Awake()
     {
         _startingPos = transform.position;
     }
 
-    private bool isHolding;
-    private Vector3 pickUpPosition;
 
     private void OnMouseOver()
     {
