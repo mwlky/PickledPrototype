@@ -18,7 +18,11 @@ public class PlayerNavMeshController : MonoBehaviour
     private NavMeshAgent _navMeshAgent;
     public bool _isPlayerHoldingPill;
 
+
+    public static event Action OnPillTaken;
+
     [SerializeField] private GameObject pillPrefab;
+    [SerializeField] private GameObject enemyPrefab;
 
     private void Awake()
     {
@@ -64,27 +68,38 @@ public class PlayerNavMeshController : MonoBehaviour
             if (collision.gameObject.CompareTag("Enemy")) OnGameLose?.Invoke();
         }
 
-        if (_stateMachine.GetCurrentState() != _stateMachine._states["powerPill"]) return;
-        if (!collision.gameObject.CompareTag("Enemy")) return;
 
-        GameManager.Instance.enemies.Remove(collision.gameObject);
-        Destroy(collision.gameObject);
-    }
+        if (_stateMachine.GetCurrentState() == _stateMachine._states["powerPill"])
+        {
+            if (collision.gameObject.tag == "Enemy")
+            {
+                GameManager.Instance.enemies.Remove(collision.gameObject);
+                Transform spawnPoint = collision.gameObject.GetComponent<EnemyRandomPatrolController>().StartingPoint;
 
-    private void OnTriggerStay(Collider collision)
-    {
+                StartCoroutine(SpawnEnemy(spawnPoint));
+                Destroy(collision.gameObject);
+
+            }
+        }
+
         if (_isPlayerHoldingPill)
         {
-            if (!collision.gameObject.CompareTag("Pill")) return;
-            Destroy(collision.gameObject);
-            _isPlayerHoldingPill = false;
-            StartCoroutine("PowerPill");
+            if (collision.gameObject.tag == "Pill")
+            {  
+                Destroy(collision.gameObject);
+                _isPlayerHoldingPill = false;
+                StartCoroutine("PowerPill");
+            }
+        }else if (collision.gameObject.tag == "Pill")
 
-            OnPillTaken?.Invoke();
-        }
-        else if (collision.gameObject.CompareTag("Pill"))
         {
             OnGameLose?.Invoke();
         }
+    }
+
+    public IEnumerator SpawnEnemy(Transform startPoint)
+    {
+        yield return new WaitForSeconds(10);
+        GameManager.Instance.enemies.Add(Instantiate(enemyPrefab, startPoint));
     }
 }
