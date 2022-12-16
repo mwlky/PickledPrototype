@@ -18,9 +18,6 @@ public class PlayerNavMeshController : MonoBehaviour
     private NavMeshAgent _navMeshAgent;
     public bool _isPlayerHoldingPill;
 
-
-    public static event Action OnPillTaken;
-
     [SerializeField] private GameObject pillPrefab;
     [SerializeField] private GameObject enemyPrefab;
 
@@ -85,7 +82,8 @@ public class PlayerNavMeshController : MonoBehaviour
         if (_isPlayerHoldingPill)
         {
             if (collision.gameObject.tag == "Pill")
-            {  
+            {
+                OnPillTaken?.Invoke();
                 Destroy(collision.gameObject);
                 _isPlayerHoldingPill = false;
                 StartCoroutine("PowerPill");
