@@ -27,9 +27,12 @@ public class CarrotCanvasController : MonoBehaviour
 
     private void Start() =>
         GenerateCarrotsUI();
-    
-    void SetCarrotsAmount(int amount) =>
+
+    void SetCarrotsAmount(int amount)
+    {
+        Debug.Log(amount);
         carrotsAmount = amount;
+    }
 
     void UpdateCarrotUI()
     {

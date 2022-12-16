@@ -10,7 +10,7 @@ public class CarrotManager : MonoBehaviour
 
     private int amountOfCarrots;
 
-    private void Awake() =>
+    private void Start() =>
         CountAllCarrots();
 
     private void OnEnable() =>
