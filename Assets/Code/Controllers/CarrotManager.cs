@@ -11,7 +11,7 @@ public class CarrotManager : MonoBehaviour
     public static List<GameObject> carrotsCount = new();
     private int amountOfCarrots;
 
-    private void Start() =>
+    private void Awake() =>
         CountAllCarrots();
 
     private void OnEnable() =>
