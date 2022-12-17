@@ -79,20 +79,14 @@ public class PlayerNavMeshController : MonoBehaviour
             }
         }
 
-        if (_isPlayerHoldingPill)
+        if (collision.gameObject.tag == "Pill")
         {
-            if (collision.gameObject.tag == "Pill")
-            {
-                OnPillTaken?.Invoke();
-                Destroy(collision.gameObject);
-                _isPlayerHoldingPill = false;
-                StartCoroutine("PowerPill");
-            }
-        }else if (collision.gameObject.tag == "Pill")
-
-        {
-            OnGameLose?.Invoke();
+            OnPillTaken?.Invoke();
+            Destroy(collision.gameObject);
+            _isPlayerHoldingPill = false;
+            StartCoroutine("PowerPill");
         }
+
     }
 
     public IEnumerator SpawnEnemy(Transform startPoint)
