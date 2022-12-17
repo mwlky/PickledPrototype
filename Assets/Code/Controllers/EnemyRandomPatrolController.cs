@@ -32,13 +32,11 @@ public class EnemyRandomPatrolController : MonoBehaviour
         _stateMachine.AddState("chasePlayer", new ChaseState(_navMeshAgent, _playerTransform));
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         _stateMachine.ChangeState("randomPatrol");
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (CheckDistanceForChase())
