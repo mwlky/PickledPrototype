@@ -186,7 +186,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 497, y: 12}
+  m_AnchoredPosition: {x: 417, y: 12}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4270398997186894570
@@ -328,6 +328,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4270398996777710730}
     m_Modifications:
+    - target: {fileID: 1489028287, guid: d7c243824ad34494db6f3300c98d43cf, type: 3}
+      propertyPath: m_Spacing
+      value: -315
+      objectReference: {fileID: 0}
+    - target: {fileID: 1731559916, guid: d7c243824ad34494db6f3300c98d43cf, type: 3}
+      propertyPath: lastHearthImagePrefab
+      value: 
+      objectReference: {fileID: 9109581860523644957, guid: 1803741e2db019f44940112a50d575f8, type: 3}
     - target: {fileID: 6469103281169321361, guid: d7c243824ad34494db6f3300c98d43cf, type: 3}
       propertyPath: m_Pivot.x
       value: 0

@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class CarrotUI : MonoBehaviour
 {
+    [SerializeField] private Sprite usedImage;
+    
     private Image image;
 
     private bool isMarkedAsCollected;
@@ -18,9 +20,9 @@ public class CarrotUI : MonoBehaviour
         if (isMarkedAsCollected) return;
         isMarkedAsCollected = true;
 
-        ChangeColor();
+        SetToActive();
     }
 
-    void ChangeColor() =>
-        image.color = Color.green;
+    void SetToActive() =>
+        image.sprite = usedImage;
 }

@@ -114,6 +114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 059aa45125b81de49a5bc3d2c6cfa206, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lastHearthImagePrefab: {fileID: 0}
   hearthImagePrefab: {fileID: 9109581860523644957, guid: 5f28e2d1bd3e85b40a2d58f7a6d7b878, type: 3}
   parent: {fileID: 6469103281886639730}
 --- !u!1 &6469103281886639731
